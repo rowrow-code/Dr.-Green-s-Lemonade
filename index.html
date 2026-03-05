@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Green's Lemonade Chatbot</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== CHAT WIDGET STYLES ===== */
+  :root {
+    --lemon: #d4f500;
+    --lemon-dark: #a8c200;
+    --green: #1a3a1a;
+    --green-mid: #2d5a2d;
+    --green-light: #3d7a3d;
+    --white: #f5f9e8;
+    --bubble-user: #d4f500;
+    --bubble-bot: #1e421e;
+    --text-dark: #0d1f0d;
+    --text-light: #c8e8c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* ===== FLOATING BUTTON ===== */
+  #chat-toggle {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 62px;
+    height: 62px;
+    background: var(--lemon);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 24px rgba(212,245,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 9999;
+  }
+  #chat-toggle:hover {
+    transform: scale(1.1) rotate(-8deg);
+    box-shadow: 0 6px 32px rgba(212,245,0,0.6);
+  }
+  #chat-toggle .close-icon { display: none; font-size: 22px; }
+  #chat-toggle.open .chat-icon { display: none; }
+  #chat-toggle.open .close-icon { display: block; }
+
+  /* ===== CHAT WINDOW ===== */
+  #chat-window {
+    position: fixed;
+    bottom: 105px;
+    right: 28px;
+    width: 370px;
+    height: 520px;
+    background: var(--green);
+    border: 2px solid var(--lemon);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,245,0,0.1);
+    z-index: 9998;
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+  }
+  #chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ===== HEADER ===== */
+  .chat-header {
+    background: linear-gradient(135deg, var(--green-mid), var(--green));
+    border-bottom: 2px solid var(--lemon);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--lemon);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    animation: bob 3s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .chat-header-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--lemon);
+    letter-spacing: 0.5px;
+  }
+  .chat-header-info span {
+    font-size: 11px;
+    color: var(--text-light);
+    opacity: 0.7;
+  }
+  .online-dot {
+    width: 8px; height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    box-shadow: 0 0 6px #4ade80;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ===== MESSAGES ===== */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-light) transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 4px; }
+
+  .msg {
+    max-width: 82%;
+    animation: fadeUp 0.3s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+
+  .msg-bubble {
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+  }
+  .msg.bot .msg-bubble {
+    background: var(--bubble-bot);
+    color: var(--text-light);
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(212,245,0,0.15);
+  }
+  .msg.user .msg-bubble {
+    background: var(--bubble-user);
+    color: var(--text-dark);
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+  }
+  .msg-time {
+    font-size: 10px;
+    color: rgba(200,232,200,0.4);
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  .msg.user .msg-time { text-align: right; }
+
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bubble-bot);
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    width: fit-content;
+    border: 1px solid rgba(212,245,0,0.15);
+  }
+  .typing-indicator span {
+    width: 7px; height: 7px;
+    background: var(--lemon);
+    border-radius: 50%;
+    animation: typing 1.2s infinite;
+    opacity: 0.4;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing {
+    0%,100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* ===== INPUT AREA ===== */
+  .chat-input-area {
+    border-top: 2px solid rgba(212,245,0,0.2);
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(26,58,26,0.9);
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--green-mid);
+    border: 1px solid rgba(212,245,0,0.25);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .chat-input::placeholder { color: rgba(200,232,200,0.35); }
+  .chat-input:focus { border-color: var(--lemon); }
+
+  .send-btn {
+    width: 40px; height: 40px;
+    background: var(--lemon);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: transform 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .send-btn:hover { transform: scale(1.1); background: #e8ff1a; }
+  .send-btn:active { transform: scale(0.95); }
+
+  /* ===== QUICK REPLIES ===== */
+  .quick-replies {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    padding: 0 16px 12px;
+  }
+  .quick-reply {
+    background: transparent;
+    border: 1px solid rgba(212,245,0,0.4);
+    border-radius: 20px;
+    padding: 5px 12px;
+    color: var(--lemon);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quick-reply:hover { background: var(--lemon); color: var(--text-dark); }
+
+  /* ===== DEMO PAGE STYLES ===== */
+  .demo-page {
+    text-align: center;
+    color: var(--white);
+    max-width: 500px;
+  }
+  .demo-page h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--lemon);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .demo-page p {
+    font-size: 14px;
+    color: var(--text-light);
+    opacity: 0.7;
+    margin-bottom: 32px;
+  }
+  .embed-box {
+    background: var(--green-mid);
+    border: 1px solid rgba(212,245,0,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
+  }
+  .embed-box h3 {
+    font-family: 'Syne', sans-serif;
+    color: var(--lemon);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .embed-code {
+    background: #0d1f0d;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 11px;
+    color: #a8e6a8;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.7;
+    border: 1px solid rgba(212,245,0,0.1);
+  }
+  .copy-btn {
+    margin-top: 12px;
+    background: var(--lemon);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s;
+  }
+  .copy-btn:hover { transform: scale(1.04); }
+  .copy-btn.copied { background: #4ade80; }
+
+  @media (max-width: 420px) {
+    #chat-window { width: calc(100vw - 24px); right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Demo Page -->
+<div class="demo-page">
+  <h1>🍋 Chat Widget</h1>
+  <p>Click the button in the bottom-right corner to open the chatbot</p>
+
+  <div class="embed-box">
+    <h3>📋 Embed Code</h3>
+    <div class="embed-code" id="embedCode">&lt;!-- Dr. Green's Lemonade Chatbot --&gt;
+&lt;script&gt;
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://YOUR-GITHUB-USERNAME.github.io/
+Dr.-Green-s-Lemonade/chatbot.js';
+  s.async = true;
+  document.head.appendChild(s);
+})();
+&lt;/script&gt;
+
+&lt;!-- OR paste the full chatbot.html
+     as an iframe: --&gt;
+&lt;iframe 
+  src="https://YOUR-GITHUB-USERNAME
+.github.io/Dr.-Green-s-Lemonade/"
+  style="position:fixed;bottom:0;
+right:0;width:420px;height:620px;
+border:none;z-index:9999"
+&gt;&lt;/iframe&gt;</div>
+    <button class="copy-btn" onclick="copyEmbed(this)">Copy Embed Code</button>
+  </div>
+</div>
+
+<!-- ===== CHATBOT WIDGET ===== -->
+<button id="chat-toggle" onclick="toggleChat()" title="Chat with us">
+  <span class="chat-icon">🍋</span>
+  <span class="close-icon">✕</span>
+</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">🍋</div>
+    <div class="chat-header-info">
+      <h3>Dr. Green's Assistant</h3>
+      <span><span class="online-dot"></span>Online now</span>
+    </div>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <!-- Messages go here -->
+  </div>
+
+  <div class="quick-replies" id="quickReplies">
+    <button class="quick-reply" onclick="sendQuick('Our menu 🍋')">Our menu 🍋</button>
+    <button class="quick-reply" onclick="sendQuick('Hours & location')">Hours & location</button>
+    <button class="quick-reply" onclick="sendQuick('Order now')">Order now</button>
+  </div>
+
+  <div class="chat-input-area">
+    <input
+      type="text"
+      class="chat-input"
+      id="chatInput"
+      placeholder="Ask anything..."
+      onkeydown="if(event.key==='Enter') sendMessage()"
+    />
+    <button class="send-btn" onclick="sendMessage()" title="Send">➤</button>
+  </div>
+</div>
+
+<script>
+  // ===== BOT RESPONSES =====
+  const responses = {
+    keywords: {
+      'menu|lemonade|drink|flavors|flavor': "🍋 Our lemonade flavors include:\n• Classic Original\n• Strawberry Bliss\n• Mint Mojito\n• Watermelon Wave\n• Ginger Zing\n\nAll made fresh daily!",
+      'price|cost|how much|$': "💚 Our prices start at $4 for a small and $6 for a large. We also have pitchers for $18! Great value for fresh-squeezed goodness.",
+      'hour|open|close|time': "🕐 We're open:\nMon–Fri: 9am – 8pm\nSat–Sun: 10am – 6pm\n\nFind us at the corner of Fresh Ave & Green St!",
+      'location|address|where|find': "📍 We're at 42 Fresh Avenue, Green District!\n\nAlso available on DoorDash and UberEats for delivery.",
+      'order|buy|get|want': "🛒 You can order:\n1. In-store\n2. Via our website\n3. DoorDash / UberEats\n\nWant me to send you the link?",
+      'hello|hi|hey|howdy|sup': "Hey there! 👋 Welcome to Dr. Green's Lemonade! I'm your virtual assistant. What can I get for you today?",
+      'thank|thanks|thx': "😊 You're welcome! Fresh lemonade and great vibes — that's what we're about! Anything else I can help with?",
+      'bye|goodbye|later|cya': "🍋 Thanks for stopping by! Come visit us soon for a fresh squeeze. Bye!",
+      'help': "I can help you with:\n• Our menu & flavors\n• Prices\n• Hours & location\n• How to order\n\nJust ask away!",
+    },
+    default: [
+      "That's a great question! 🍋 Could you rephrase that? I'm best at answering questions about our menu, hours, or orders.",
+      "Hmm, I'm not sure about that one. Try asking about our flavors, location, or prices!",
+      "I'm just a lemonade bot 🍋 — but I can help with menu items, hours, and ordering. What would you like to know?",
+    ]
+  };
+
+  function getBotReply(msg) {
+    const lower = msg.toLowerCase();
+    for (const [pattern, reply] of Object.entries(responses.keywords)) {
+      const regex = new RegExp(pattern, 'i');
+      if (regex.test(lower)) return reply;
+    }
+    return responses.default[Math.floor(Math.random() * responses.default.length)];
+  }
+
+  // ===== CHAT LOGIC =====
+  let isOpen = false;
+  let hasGreeted = false;
+
+  function toggleChat() {
+    isOpen = !isOpen;
+    document.getElementById('chat-window').classList.toggle('open', isOpen);
+    document.getElementById('chat-toggle').classList.toggle('open', isOpen);
+
+    if (isOpen && !hasGreeted) {
+      hasGreeted = true;
+      setTimeout(() => {
+        addMessage("bot", "Hey there! 👋 Welcome to **Dr. Green's Lemonade**! I'm here to help. Ask me about our menu, prices, hours, or how to order! 🍋");
+      }, 400);
+    }
+    if (isOpen) {
+      setTimeout(() => document.getElementById('chatInput').focus(), 350);
+    }
+  }
+
+  function addMessage(type, text) {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = `msg ${type}`;
+    const now = new Date();
+    const time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    div.innerHTML = `
+      <div class="msg-bubble">${text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
+      <div class="msg-time">${time}</div>
+    `;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function showTyping() {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = 'typing-msg';
+    div.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typing-msg');
+    if (el) el.remove();
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    addMessage('user', text);
+    document.getElementById('quickReplies').style.display = 'none';
+    showTyping();
+    const delay = 800 + Math.random() * 700;
+    setTimeout(() => {
+      removeTyping();
+      addMessage('bot', getBotReply(text));
+    }, delay);
+  }
+
+  function sendQuick(text) {
+    document.getElementById('chatInput').value = text;
+    sendMessage();
+  }
+
+  function copyEmbed(btn) {
+    const code = document.getElementById('embedCode').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy Embed Code';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
