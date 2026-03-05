@@ -598,7 +598,7 @@ footer a{color:var(--yellow);text-decoration:none;}
           <div class="info-card-icon">📞</div>
           <div class="info-card-text">
             <strong>WhatsApp Orders</strong>
-            <span>+297 000 0000</span>
+            <span>+297 563 7904</span>
           </div>
         </div>
       </div>
@@ -632,7 +632,7 @@ footer a{color:var(--yellow);text-decoration:none;}
     <a href="https://www.tiktok.com/@drgreenveggiearuba" target="_blank" class="glow-icon tt" title="TikTok">
       <i class="fab fa-tiktok"></i>
     </a>
-    <a href="https://wa.me/297XXXXXXXX" target="_blank" class="glow-icon wa" title="WhatsApp">
+    <a href="https://wa.me/2975637904" target="_blank" class="glow-icon wa" title="WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </a>
     <a href="https://www.google.com/maps/place/Dr+Green+Veggie+Aruba+Lemonade/@12.4982875,-69.9968778,17z/data=!3m1!4b1!4m6!3m5!1s0x8e85393b5ce37ad1:0xa21dfa5adaa3b01e!8m2!3d12.4982875!4d-69.9968778" target="_blank" class="glow-icon maps" title="Find us on Google Maps">
@@ -651,7 +651,7 @@ footer a{color:var(--yellow);text-decoration:none;}
     <a href="https://www.tiktok.com/@drgreenveggiearuba" target="_blank" class="social-btn social-tt">
       <i class="fab fa-tiktok social-icon"></i> Follow on TikTok
     </a>
-    <a href="https://wa.me/297XXXXXXXX" target="_blank" class="social-btn social-wa">
+    <a href="https://wa.me/2975637904" target="_blank" class="social-btn social-wa">
       <i class="fab fa-whatsapp social-icon"></i> Chat on WhatsApp
     </a>
   </div>
@@ -694,8 +694,8 @@ footer a{color:var(--yellow);text-decoration:none;}
       <div class="whatsapp-card">
         <h3>🍋 Order in Seconds!</h3>
         <p>Skip the wait — send us a WhatsApp message and we'll have your fresh lemonade ready for pickup or delivery.</p>
-        <div class="whatsapp-number">📱 +297 000 0000</div>
-        <a href="https://wa.me/2970000000?text=Hi!%20I%20want%20to%20order%20from%20Dr.%20Green's%20Lemonade!" target="_blank" class="btn-whatsapp">
+        <div class="whatsapp-number">📱 +297 563 7904</div>
+        <a href="https://wa.me/2975637904?text=Hi!%20I%20want%20to%20order%20from%20Dr.%20Green's%20Lemonade!" target="_blank" class="btn-whatsapp">
           💬 Chat on WhatsApp
         </a>
       </div>
@@ -711,7 +711,7 @@ footer a{color:var(--yellow);text-decoration:none;}
 </footer>
 
 <!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/2970000000?text=Hi!%20I%20want%20to%20order%20from%20Dr.%20Green's%20Lemonade!" target="_blank" class="wa-float" title="Order on WhatsApp">💬</a>
+<a href="https://wa.me/2975637904?text=Hi!%20I%20want%20to%20order%20from%20Dr.%20Green's%20Lemonade!" target="_blank" class="wa-float" title="Order on WhatsApp">💬</a>
 
 <!-- CHATBOT TOGGLE -->
 <button id="chat-toggle" onclick="toggleChat()" title="Ask us anything">
@@ -768,39 +768,68 @@ function handleForm(e){
 }
 
 // ===== CHATBOT =====
+const MAPS_URL = "https://www.google.com/maps/place/Dr+Green+Veggie+Aruba+Lemonade/@12.4982875,-69.9968778,17z/data=!3m1!4b1!4m6!3m5!1s0x8e85393b5ce37ad1:0xa21dfa5adaa3b01e!8m2!3d12.4982875!4d-69.9968778!16s%2Fg%2F11yldcskz6";
+const MAPS_LINK = `<a href="${MAPS_URL}" target="_blank" style="color:#235c2b;font-weight:800;text-decoration:underline;">📍 Open Google Maps →</a>`;
+const WA_LINK = `<a href="https://wa.me/2975637904?text=Hi!%20I%20want%20to%20order%20from%20Dr.%20Green%20Veggie%20Aruba!" target="_blank" style="color:#25d366;font-weight:800;text-decoration:underline;">💬 Message us on WhatsApp →</a>`;
+const IG_LINK = `<a href="https://www.instagram.com/drgreenveggiearuba/" target="_blank" style="color:#E1306C;font-weight:800;">@drgreenveggiearuba</a>`;
+const TT_LINK = `<a href="https://www.tiktok.com/@drgreenveggiearuba" target="_blank" style="color:#010101;font-weight:800;">@drgreenveggiearuba</a>`;
+const FB_LINK = `<a href="https://www.facebook.com/drgreenveggiearuba" target="_blank" style="color:#1877F2;font-weight:800;">Dr Green Veggie Aruba</a>`;
+
 const KB = {
-  'menu|flavor|drink|lemonade|what.*have|offer|product': `🍋 Our full menu:\n\n• **Classic Original** – $4 (S) / $6 (L)\n• **Mint Mojito** – $4 (S) / $6 (L)\n• **Strawberry Bliss** – $5 (S) / $7 (L)\n• **Watermelon Wave** – $5 (S) / $7 (L)\n• **Ginger Zing** – $5 (S) / $7 (L)\n• **Family Pitcher** (any flavor) – $18\n\nAll made fresh daily with zero artificial ingredients! 🌿`,
-  'price|cost|how much|cheap|expensive': `💰 Our prices:\n\n• Small: $4–$5\n• Large: $6–$7\n• Family Pitcher: $18\n\nFresh-squeezed and worth every cent! 🍋`,
-  'classic|original': `🍋 **Classic Original** — fresh-squeezed lemons, cane sugar & pure Aruban water. $4 (S) / $6 (L).`,
-  'mint|mojito': `🌿 **Mint Mojito** — zesty lemon + fresh garden mint. Island refreshment! $4 (S) / $6 (L).`,
-  'strawberry|bliss': `🍓 **Strawberry Bliss** — sun-ripened strawberries + classic lemonade. $5 (S) / $7 (L).`,
-  'ginger|zing': `🫚 **Ginger Zing** — bold fresh ginger + lemon. Spicy-sweet elixir! $5 (S) / $7 (L).`,
-  'watermelon|wave': `🍉 **Watermelon Wave** — juicy watermelon + citrus lemon. Ultimate island drink! $5 (S) / $7 (L).`,
-  'pitcher|family|bulk': `🫙 **Family Pitcher** — any flavor, big enough to share. Perfect for the beach! $18.`,
-  'hour|open|close|time|when|schedule': `🕐 We're open **every day**:\n\n**Monday – Sunday: 9:00 AM – 8:00 PM**\n\nCome fresh, leave refreshed! 🍋`,
-  'location|address|where|find|aruba|map|direction|mahuma': `📍 **Our Location:**\nMahuma 21, Oranjestad, Aruba\n\n🗺️ **Google Maps:** <a href="https://www.google.com/maps/place/Dr+Green+Veggie+Aruba+Lemonade/@12.4982875,-69.9968778,17z" target="_blank" style="color:#3a7d44;font-weight:700;">Open in Maps →</a>\n\n📱 Phone: +297 000 0000`,
-  'order|buy|how.*order|purchase|get|booking': `🛒 **How to Order:**\n\n1. Visit us in person at Mahuma 21, Oranjestad\n2. Message us on WhatsApp (green button on this page)\n3. Use the Contact form on this website\n\nFor bulk or event orders, contact us directly! 🎉`,
-  'whatsapp|phone|number|call|contact|reach|email': `📱 **Contact Us:**\n\nPhone: +297 000 0000\nAddress: Mahuma 21, Oranjestad, Aruba\n\nTap the 💬 WhatsApp button on this page or scroll to the Contact section!`,
-  'instagram|facebook|tiktok|social|follow|social media': `📲 **Follow Dr. Green Veggie Aruba:**\n\n📸 Instagram: <a href="https://www.instagram.com/drgreenveggiearuba/" target="_blank" style="color:#3a7d44;font-weight:700;">@drgreenveggiearuba</a>\n🎵 TikTok: <a href="https://www.tiktok.com/@drgreenveggiearuba" target="_blank" style="color:#3a7d44;font-weight:700;">@drgreenveggiearuba</a>\n👍 Facebook: <a href="https://www.facebook.com/drgreenveggiearuba" target="_blank" style="color:#3a7d44;font-weight:700;">Dr Green Veggie Aruba</a>`,
-  'ingredient|natural|fresh|organic|healthy|artificial': `🌿 **All-Natural Ingredients:**\n\n• Real fresh-squeezed fruit only\n• Pure cane sugar — no artificial sweeteners\n• Clean Aruban water\n• Zero preservatives or artificial colors\n\nHonest, healthy, and delicious! 💚`,
-  'catering|event|party|wedding|corporate': `🎉 **Event Catering:**\n\nYes! We cater Aruba events:\n• Beach parties\n• Weddings\n• Corporate events\n• Birthdays\n\nContact us at +297 000 0000 or via the WhatsApp button on this page.`,
-  'delivery|deliver': `🛵 We offer **in-store pickup** at Mahuma 21, Oranjestad and **WhatsApp pre-orders**.\n\nFor bulk/event delivery, contact us at +297 000 0000.`,
-  'about|story|who|founder|what is|dr green|company|veggie': `💚 **About Us:**\n\n**Dr. Green Veggie Aruba Lemonade** is an Aruba-based fresh lemonade & veggie business at Mahuma 21, Oranjestad. Everything is squeezed fresh daily using all-natural ingredients — no artificial flavors, no preservatives. Pure island goodness! 🌴🍋`,
-  'hello|hi|hey|hola|good morning|good afternoon|start|welcome': `Hey there! 👋 Welcome to **Dr. Green Veggie Aruba Lemonade**! 🍋\n\nI can help you with:\n• Menu & flavors 🍋\n• Prices 💰\n• Location & hours 📍\n• How to order 🛒\n• Social media & contact 📱\n\nWhat would you like to know?`,
-  'thank|thanks|thx|gracias|appreciate': `😊 You're very welcome! We look forward to serving you at Mahuma 21, Oranjestad. Stay refreshed! 🍋`,
-  'bye|goodbye|later|cya': `Bye! 🍋 Hope to see you soon at Dr. Green's in Aruba. Have a wonderful day! 🌴`,
-  'help|what can you|support|options': `I can help you with:\n\n🍋 Menu & flavors\n💰 Prices\n📍 Location in Aruba\n🕐 Opening hours\n🛒 How to order\n📱 WhatsApp & contact\n📸 Social media\n💚 About our business\n\nJust ask anything related to Dr. Green Veggie Aruba!`,
-  'tripadvisor|review|rating': `⭐ You can find us on **TripAdvisor** — search for "Dr Green Veggie Aruba Lemonade"!\n\nWe're located at Mahuma 21, Oranjestad, Aruba. We'd love your review after your visit! 🍋`,
+  'menu|flavor|drink|lemonade|what.*have|offer|product|sell': `🍋 <strong>Our Full Menu</strong><br><br>🟡 <strong>Classic Original</strong> — $4 (S) / $6 (L)<br>🟢 <strong>Mint Mojito</strong> — $4 (S) / $6 (L)<br>🔴 <strong>Strawberry Bliss</strong> — $5 (S) / $7 (L)<br>🟠 <strong>Watermelon Wave</strong> — $5 (S) / $7 (L)<br>🟤 <strong>Ginger Zing</strong> — $5 (S) / $7 (L)<br>🫙 <strong>Family Pitcher</strong> (any flavor) — $18<br><br>Everything is squeezed <strong>fresh daily</strong> — zero artificial ingredients! 🌿<br><br>Want to order? ${WA_LINK}`,
+
+  'price|cost|how much|cheap|expensive|dollar': `💰 <strong>Our Prices</strong><br><br>• Small cup: <strong>$4 – $5</strong><br>• Large cup: <strong>$6 – $7</strong><br>• Family Pitcher: <strong>$18</strong><br><br>Freshly squeezed, all-natural, and worth every cent! 🍋<br><br>Ready to order? ${WA_LINK}`,
+
+  'classic|original': `🍋 <strong>Classic Original Lemonade</strong><br><br>Our timeless recipe — fresh-squeezed lemons, pure cane sugar & clean Aruban water. Perfectly balanced, perfectly refreshing.<br><br>💵 <strong>$4 (Small) / $6 (Large)</strong><br><br>Come grab one at Mahuma 21, Oranjestad! ${MAPS_LINK}`,
+
+  'mint|mojito': `🌿 <strong>Mint Mojito Lemonade</strong><br><br>Zesty lemon meets fresh garden mint for a cooling, island-inspired refresher. Non-alcoholic and incredibly delicious!<br><br>💵 <strong>$4 (Small) / $6 (Large)</strong><br><br>Find us at Mahuma 21, Oranjestad. ${MAPS_LINK}`,
+
+  'strawberry|bliss': `🍓 <strong>Strawberry Bliss Lemonade</strong><br><br>Sun-ripened strawberries blended with our classic lemonade base. Sweet, tart, and totally tropical!<br><br>💵 <strong>$5 (Small) / $7 (Large)</strong><br><br>Order via ${WA_LINK} or visit us in Oranjestad!`,
+
+  'ginger|zing': `🫚 <strong>Ginger Zing Lemonade</strong><br><br>Bold fresh ginger root + lemon = a spicy-sweet health elixir that energizes and refreshes at the same time!<br><br>💵 <strong>$5 (Small) / $7 (Large)</strong><br><br>Come taste it at Mahuma 21, Oranjestad. ${MAPS_LINK}`,
+
+  'watermelon|wave': `🍉 <strong>Watermelon Wave Lemonade</strong><br><br>Juicy watermelon meets citrus lemon for the ultimate Aruban summer refresher. Pure island vibes in a cup!<br><br>💵 <strong>$5 (Small) / $7 (Large)</strong><br><br>Order now via ${WA_LINK}`,
+
+  'pitcher|family|bulk': `🫙 <strong>Family Pitcher</strong><br><br>Choose any of our 5 flavors in a generous pitcher — perfect for sharing at the beach, at a party, or with the whole family!<br><br>💵 <strong>$18 per pitcher</strong><br><br>Pre-order yours via ${WA_LINK}`,
+
+  'hour|open|close|time|when|schedule|today': `🕐 <strong>Opening Hours</strong><br><br>📅 <strong>Monday – Sunday</strong><br>⏰ <strong>9:00 AM – 8:00 PM</strong><br><br>We're open every single day! Come early for the freshest squeeze of the day 🍋<br><br>${MAPS_LINK}`,
+
+  'location|address|where|find|aruba|map|direction|mahuma|oranjestad': `📍 <strong>Our Location</strong><br><br><strong>Mahuma 21, Oranjestad, Aruba</strong><br><br>${MAPS_LINK}<br><br>📞 <strong>Phone:</strong> +297 563 7904<br>🕐 <strong>Hours:</strong> Mon–Sun, 9:00 AM – 8:00 PM<br><br>We look forward to seeing you! 🌴🍋`,
+
+  'order|buy|how.*order|purchase|get|booking|reserve': `🛒 <strong>How to Order</strong><br><br>3 easy ways to get your lemonade:<br><br><strong>1. Visit Us In-Person</strong><br>📍 Mahuma 21, Oranjestad, Aruba<br><br><strong>2. Order on WhatsApp</strong><br>${WA_LINK}<br><br><strong>3. Use the Contact Form</strong><br>Scroll down to the Contact section on this page<br><br>For bulk or event orders, please contact us directly! 🎉`,
+
+  'whatsapp|phone|number|call|contact|reach|email|telephone': `📱 <strong>Contact Dr. Green Veggie Aruba</strong><br><br>📞 <strong>Phone / WhatsApp:</strong> +297 563 7904<br>📍 <strong>Address:</strong> Mahuma 21, Oranjestad, Aruba<br><br>${WA_LINK}<br>${MAPS_LINK}<br><br>🕐 We reply quickly during opening hours (9AM–8PM)!`,
+
+  'instagram|facebook|tiktok|social|follow|social media|page': `📲 <strong>Follow Us on Social Media!</strong><br><br>📸 <strong>Instagram:</strong> ${IG_LINK}<br>🎵 <strong>TikTok:</strong> ${TT_LINK}<br>👍 <strong>Facebook:</strong> ${FB_LINK}<br><br>We post daily specials, new flavors, and pure Aruban sunshine! ☀️ Give us a follow and stay updated!`,
+
+  'ingredient|natural|fresh|organic|healthy|artificial|sugar|vegan': `🌿 <strong>What's in Our Lemonade?</strong><br><br>✅ Real fresh-squeezed fruit<br>✅ Pure cane sugar only<br>✅ Clean Aruban water<br>❌ No artificial flavors<br>❌ No preservatives<br>❌ No artificial colors<br><br>100% natural, 100% honest. Good for your body and your taste buds! 💚`,
+
+  'catering|event|party|wedding|corporate|birthday': `🎉 <strong>Event Catering in Aruba</strong><br><br>Yes! We bring Dr. Green Veggie Aruba Lemonade to your event:<br><br>🏖️ Beach parties<br>💍 Weddings<br>🏢 Corporate events<br>🎂 Birthdays<br>🎊 Any celebration!<br><br>📞 Call/WhatsApp us to discuss pricing & availability:<br>${WA_LINK}`,
+
+  'delivery|deliver|ship|pickup': `🛵 <strong>Delivery & Pickup</strong><br><br>🏪 <strong>Walk-in Pickup:</strong> Available daily at Mahuma 21, Oranjestad<br>📱 <strong>WhatsApp Pre-order:</strong> Order ahead and pick up ready-made<br><br>For <strong>event or bulk delivery</strong>, contact us directly:<br>${WA_LINK}<br><br>📞 Phone: +297 563 7904`,
+
+  'about|story|who|founder|what is|dr green|company|veggie|business': `💚 <strong>About Dr. Green Veggie Aruba Lemonade</strong><br><br>We are an Aruba-based fresh lemonade & veggie juice business located in the heart of Oranjestad. Every drink is squeezed <strong>fresh daily</strong> using all-natural ingredients — no artificial flavors, no preservatives, no shortcuts.<br><br>📍 Mahuma 21, Oranjestad, Aruba<br>🕐 Open 7 days a week, 9AM–8PM<br>${MAPS_LINK}`,
+
+  'tripadvisor|review|rating|recommend': `⭐ <strong>Reviews & TripAdvisor</strong><br><br>You can find and review us on <strong>TripAdvisor</strong> — search for <em>"Dr Green Veggie Aruba Lemonade"</em>.<br><br>We're also on Google Maps — leave us a review after your visit!<br>${MAPS_LINK}<br><br>We love hearing from our customers! 🍋`,
+
+  'hello|hi|hey|hola|good morning|good afternoon|good evening|start|welcome|sup': `👋 Hey there! Welcome to <strong>Dr. Green Veggie Aruba Lemonade</strong>! 🍋🌴<br><br>I'm here to help you with anything about our business. Here's what I can do:<br><br>🍋 Menu & flavors<br>💰 Prices<br>📍 Location in Oranjestad<br>🕐 Opening hours<br>🛒 How to order<br>📱 Contact & WhatsApp<br>📸 Social media<br><br>What would you like to know?`,
+
+  'thank|thanks|thx|gracias|appreciate|awesome|perfect|great': `😊 You're so welcome! We really appreciate it.<br><br>Come visit us at <strong>Mahuma 21, Oranjestad</strong> and we'll squeeze the freshest lemonade just for you! 🍋🌴<br><br>${MAPS_LINK}`,
+
+  'bye|goodbye|later|cya|see you|adios': `🍋 Bye! Thanks for stopping by. We hope to see you soon at Dr. Green Veggie Aruba in Oranjestad.<br><br>Stay refreshed and enjoy Aruba! 🌴☀️`,
+
+  'help|what can you|support|options|question': `🤔 <strong>Here's what I can help you with:</strong><br><br>🍋 Menu & all 5 flavors<br>💰 Prices & pitcher deals<br>📍 Location (Mahuma 21, Oranjestad)<br>🕐 Opening hours<br>🛒 How to place an order<br>📱 Phone & WhatsApp contact<br>📸 Instagram, TikTok & Facebook<br>🎉 Event catering<br>🌿 About our ingredients<br><br>Just type your question!`,
 };
-const REFUSED=[
-  "I'm sorry, I can only answer questions related to **Dr. Green Veggie Aruba Lemonade** and this website. 🍋 Try asking about our menu, hours, or location!",
-  "That information isn't in my database. Please ask something related to our products, location, or services! 😊",
-  "I'm only able to help with questions about **Dr. Green Veggie Aruba Lemonade**. Is there anything about our lemonade, location, or ordering I can help with?",
+
+const REFUSED = [
+  `I'm sorry, I can only answer questions related to <strong>Dr. Green Veggie Aruba Lemonade</strong> and this website. 🍋<br><br>Try asking about our <strong>menu, prices, location, hours, or how to order!</strong>`,
+  `That information isn't available in my database. I can only help with questions about our business.<br><br>Try asking: "Where are you located?" or "What flavors do you have?" 😊`,
+  `I'm only able to provide information about <strong>Dr. Green Veggie Aruba Lemonade</strong>.<br><br>If you need more help, contact us directly: ${WA_LINK}`,
 ];
 
 function getBotReply(msg){
-  const l=msg.toLowerCase();
-  for(const[p,r] of Object.entries(KB)){
+  const l = msg.toLowerCase();
+  for(const [p,r] of Object.entries(KB)){
     if(new RegExp(p,'i').test(l)) return r;
   }
   return REFUSED[Math.floor(Math.random()*REFUSED.length)];
@@ -820,7 +849,12 @@ function addMsg(t,text){
   d.className='msg '+t;
   const now=new Date();
   const tm=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  d.innerHTML=`<div class="mb">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div><div class="mt">${tm}</div>`;
+  // For bot messages: render HTML directly (links, bold, etc.)
+  // For user messages: escape HTML for safety
+  let content = t==='bot'
+    ? text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    : text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  d.innerHTML=`<div class="mb">${content}</div><div class="mt">${tm}</div>`;
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 function showTyping(){
