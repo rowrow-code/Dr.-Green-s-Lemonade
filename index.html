@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dr. Green's Lemonade – Aruba</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 :root {
   --yellow: #f5d000;
@@ -250,8 +251,25 @@ section{padding:90px 5%;}
   color:#fff;box-shadow:0 6px 24px rgba(220,39,67,0.3);
 }
 .social-fb{background:#1877f2;color:#fff;box-shadow:0 6px 24px rgba(24,119,242,0.3);}
-.social-btn:hover{transform:translateY(-4px) scale(1.03);}
+.social-tt{background:#010101;color:#fff;box-shadow:0 6px 24px rgba(37,244,238,0.35);}
+.social-wa{background:#25d366;color:#fff;box-shadow:0 6px 24px rgba(37,211,102,0.35);}
+.social-btn:hover{transform:translateY(-4px) scale(1.05);}
 .social-icon{font-size:22px;}
+
+/* Glowing icon circles */
+.social-icons-row{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:36px;}
+.glow-icon{
+  width:64px;height:64px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:#fff;text-decoration:none;
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.glow-icon.ig{background:#E1306C;box-shadow:0 0 18px #E1306C;}
+.glow-icon.fb{background:#1877F2;box-shadow:0 0 18px #1877F2;}
+.glow-icon.tt{background:#010101;box-shadow:0 0 18px #25F4EE;}
+.glow-icon.wa{background:#25D366;box-shadow:0 0 18px #25D366;}
+.glow-icon.maps{background:#EA4335;box-shadow:0 0 18px #EA4335;}
+.glow-icon:hover{transform:scale(1.22);box-shadow:0 0 36px currentColor;}
 
 /* ===== CONTACT ===== */
 #contact{background:var(--cream);}
@@ -566,7 +584,7 @@ footer a{color:var(--yellow);text-decoration:none;}
           <div class="info-card-icon">📍</div>
           <div class="info-card-text">
             <strong>Address</strong>
-            <span>Palm Beach, Aruba (Noord)</span>
+            <span>Mahuma 21, Oranjestad, Aruba</span>
           </div>
         </div>
         <div class="info-card">
@@ -587,7 +605,7 @@ footer a{color:var(--yellow);text-decoration:none;}
     </div>
     <div class="map-container reveal">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14933.524!2d-70.04!3d12.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e8584b4b9b9b9b9%3A0x0!2sPalm+Beach+Aruba!5e0!3m2!1sen!2saw!4v1700000000000"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.0!2d-69.9968778!3d12.4982875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e85393b5ce37ad1%3A0xa21dfa5adaa3b01e!2sDr+Green+Veggie+Aruba+Lemonade!5e0!3m2!1sen!2saw!4v1700000000000"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
         title="Dr. Green's Lemonade Location in Aruba">
       </iframe>
@@ -602,12 +620,39 @@ footer a{color:var(--yellow);text-decoration:none;}
     <h2 class="section-title">Stay Connected</h2>
     <p class="section-sub" style="margin:0 auto;">Follow us for daily specials, new flavors, and pure Aruban sunshine vibes.</p>
   </div>
-  <div class="social-grid reveal">
-    <a href="https://instagram.com" target="_blank" class="social-btn social-ig">
-      <span class="social-icon">📸</span> Follow on Instagram
+
+  <!-- Glowing icon circles -->
+  <div class="social-icons-row reveal">
+    <a href="https://instagram.com/USERNAME" target="_blank" class="glow-icon ig" title="Instagram">
+      <i class="fab fa-instagram"></i>
     </a>
-    <a href="https://facebook.com" target="_blank" class="social-btn social-fb">
-      <span class="social-icon">👍</span> Like us on Facebook
+    <a href="https://facebook.com/PAGENAME" target="_blank" class="glow-icon fb" title="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://tiktok.com/@USERNAME" target="_blank" class="glow-icon tt" title="TikTok">
+      <i class="fab fa-tiktok"></i>
+    </a>
+    <a href="https://wa.me/297XXXXXXXX" target="_blank" class="glow-icon wa" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://www.google.com/maps/place/Dr+Green+Veggie+Aruba+Lemonade/@12.4982875,-69.9968778,17z" target="_blank" class="glow-icon maps" title="Find us on Google Maps">
+      <i class="fas fa-map-marker-alt"></i>
+    </a>
+  </div>
+
+  <!-- Big buttons -->
+  <div class="social-grid reveal">
+    <a href="https://instagram.com/USERNAME" target="_blank" class="social-btn social-ig">
+      <i class="fab fa-instagram social-icon"></i> Follow on Instagram
+    </a>
+    <a href="https://facebook.com/PAGENAME" target="_blank" class="social-btn social-fb">
+      <i class="fab fa-facebook-f social-icon"></i> Like us on Facebook
+    </a>
+    <a href="https://tiktok.com/@USERNAME" target="_blank" class="social-btn social-tt">
+      <i class="fab fa-tiktok social-icon"></i> Follow on TikTok
+    </a>
+    <a href="https://wa.me/297XXXXXXXX" target="_blank" class="social-btn social-wa">
+      <i class="fab fa-whatsapp social-icon"></i> Chat on WhatsApp
     </a>
   </div>
 </section>
@@ -733,7 +778,7 @@ const KB = {
   'watermelon|wave': `🍉 **Watermelon Wave** — juicy watermelon meets citrus lemon. The ultimate summer refresher! $5 small / $7 large.`,
   'pitcher|family|bulk': `🫙 **Family Pitcher** — any flavor, in a big pitcher perfect for sharing at the beach or with the whole family! Just $18.`,
   'hour|open|close|time|when': `🕐 We're open every day:\n\n**Mon – Sun: 9:00 AM – 8:00 PM**\n\nCome anytime and we'll squeeze it fresh for you! 🍋`,
-  'location|address|where|find|aruba|map': `📍 We're located at **Palm Beach, Aruba (Noord)**!\n\nRight in the heart of the tourist strip. Check the map section on our website to get directions. 🌴`,
+  'location|address|where|find|aruba|map': `📍 We're located at **Mahuma 21, Oranjestad, Aruba**!\n\nRight in the heart of the tourist strip. Check the map section on our website to get directions. 🌴`,
   'order|buy|how.*order|purchase|get': `🛒 You can order in 3 ways:\n\n1. **In-store** – walk right up!\n2. **WhatsApp** – message us at +297 000 0000\n3. **Online** – use the contact form on this page\n\nWe also do bulk and event orders! 🎉`,
   'whatsapp|phone|number|call|contact': `📱 You can reach us on WhatsApp at:\n\n**+297 000 0000**\n\nJust click the green button on the bottom-left of the page, or scroll to the Contact section!`,
   'instagram|facebook|social|follow': `📸 Follow us!\n\n• **Instagram:** @drgreenslemonade\n• **Facebook:** Dr. Green's Lemonade\n\nWe post daily specials, new flavors, and Aruban sunshine vibes! ☀️`,
